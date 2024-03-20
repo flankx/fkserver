@@ -13,8 +13,8 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:mysql://mysql:3306/fkserver?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
-    username: {MYSQL_USERNAME}
-    password: {MYSQL_PASSWORD}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
     hikari:
       pool-name: Hikari
       auto-commit: false
@@ -30,7 +30,7 @@ spring:
       host: redis
       port: 6379
       database: 0
-      password: {REDIS_PASSWORD}
+      password: ${REDIS_PASSWORD}
       timeout: 30000ms
       lettuce:
         pool:
