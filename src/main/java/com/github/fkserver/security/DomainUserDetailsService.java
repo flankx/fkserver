@@ -16,7 +16,7 @@ import com.github.fkserver.entity.Authority;
 import com.github.fkserver.entity.User;
 import com.github.fkserver.repository.UserRepository;
 
-@Service("sserDetailsService")
+@Service("userDetailsService")
 public class DomainUserDetailsService implements UserDetailsService {
 
     private final Logger logger = LoggerFactory.getLogger(DomainUserDetailsService.class);
