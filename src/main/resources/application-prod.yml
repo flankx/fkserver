@@ -1,0 +1,47 @@
+server:
+  port: 8080
+
+spring:
+
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: false
+
+  # MySQL 配置
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://mysql:3306/fkserver?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
+    username: {MYSQL_USERNAME}
+    password: {MYSQL_PASSWORD}
+    hikari:
+      pool-name: Hikari
+      auto-commit: false
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+
+  # redis 配置
+  data:
+    redis:
+      host: redis
+      port: 6379
+      database: 0
+      password: {REDIS_PASSWORD}
+      timeout: 30000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-wait: -1ms
+          max-idle: 8
+          min-idle: 0
+
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  production: true
+  setting:
+    language: zh_cn
