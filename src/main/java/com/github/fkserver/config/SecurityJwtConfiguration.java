@@ -21,8 +21,11 @@ import com.nimbusds.jose.util.Base64;
 @Configuration
 public class SecurityJwtConfiguration {
 
-    private final static String JWT_KEY =
-        "]NjI0MmE3ZjhiNDAyZWY4MjFlOGU0MmIxYTM2ZTQ3ZDFmNDU1M2JiYTU0ODYzNTM3ZWFkYTBiYjQyNDRjMDRjMjAxYTdmNTgyMWNjMjJlNjcwMTM0MjFkY2ZlZTdlODFlN2E1NzBhMDdmZDBhNTVmMTkwYzU3OTk4OWZhYTY2ZDc=";
+    private final ApplicationProperties applicationProperties;
+
+    public SecurityJwtConfiguration(ApplicationProperties applicationProperties) {
+        this.applicationProperties = applicationProperties;
+    }
 
     @Bean
     public JwtDecoder jwtDecoder() {
@@ -53,7 +56,7 @@ public class SecurityJwtConfiguration {
     }
 
     private SecretKey getSecretKey() {
-        byte[] keyBytes = Base64.from(JWT_KEY).decode();
+        byte[] keyBytes = Base64.from(applicationProperties.getJwt().getBase64Secret()).decode();
         return new SecretKeySpec(keyBytes, 0, keyBytes.length, SecurityUtils.JWT_ALGORITHM.getName());
     }
 

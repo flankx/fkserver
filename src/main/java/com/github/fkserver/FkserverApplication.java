@@ -10,12 +10,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MarkerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.env.Environment;
+
+import com.github.fkserver.config.ApplicationProperties;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SpringBootApplication
+@EnableConfigurationProperties(value = {ApplicationProperties.class})
 public class FkserverApplication {
 
     public static void main(String[] args) {

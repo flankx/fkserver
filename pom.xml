@@ -71,6 +71,10 @@
             <artifactId>thymeleaf-extras-springsecurity6</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-hibernate6</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
             <version>${knife4j-openapi3.version}</version>

@@ -126,3 +126,10 @@ spring:
 
   thymeleaf:
     mode: HTML
+
+application:
+  app-version: 1.0
+  jwt:
+    validity-sec: 86400       # 24 * 60 * 60 s
+    validity-rm-sec: 2592000  # 72 * 60 * 60 s
+    base64-secret: "]NjI0MmE3ZjhiNDAyZWY4MjFlOGU0MmIxYTM2ZTQ3ZDFmNDU1M2JiYTU0ODYzNTM3ZWFkYTBiYjQyNDRjMDRjMjAxYTdmNTgyMWNjMjJlNjcwMTM0MjFkY2ZlZTdlODFlN2E1NzBhMDdmZDBhNTVmMTkwYzU3OTk4OWZhYTY2ZDc="

@@ -4,7 +4,6 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.fkserver.config.ApplicationProperties;
 import com.github.fkserver.dto.JwtTokenDTO;
 import com.github.fkserver.dto.LoginDTO;
 import com.github.fkserver.security.SecurityUtils;
@@ -35,16 +35,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "用户授权")
 public class AuthenticateController {
 
-    @Value("${jwt.token-validity-in-seconds:86400}")
-    private long tokenValidityInSeconds;
-
-    @Value("${jwt.token-validity-in-seconds-for-remember-me:2592000}")
-    private long tokenValidityInSecondsForRememberMe;
-
+    private final ApplicationProperties applicationProperties;
     private final JwtEncoder jwtEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    public AuthenticateController(JwtEncoder jwtEncoder, AuthenticationManagerBuilder authenticationManagerBuilder) {
+    public AuthenticateController(ApplicationProperties applicationProperties, JwtEncoder jwtEncoder,
+        AuthenticationManagerBuilder authenticationManagerBuilder) {
+        this.applicationProperties = applicationProperties;
         this.jwtEncoder = jwtEncoder;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
     }
@@ -69,9 +66,9 @@ public class AuthenticateController {
         Instant now = Instant.now();
         Instant validity;
         if (rememberMe) {
-            validity = now.plus(this.tokenValidityInSecondsForRememberMe, ChronoUnit.SECONDS);
+            validity = now.plus(applicationProperties.getJwt().getValidityRmSec(), ChronoUnit.SECONDS);
         } else {
-            validity = now.plus(this.tokenValidityInSeconds, ChronoUnit.SECONDS);
+            validity = now.plus(applicationProperties.getJwt().getValiditySec(), ChronoUnit.SECONDS);
         }
 
         // @formatter:off
