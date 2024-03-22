@@ -15,9 +15,15 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "fk_user")
 public class User extends AbstractAuditingEntity<Long> {
@@ -84,6 +90,7 @@ public class User extends AbstractAuditingEntity<Long> {
     @JoinTable(name = "fk_user_authority", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
         inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
     @BatchSize(size = 20)
+    @ToString.Exclude
     private Set<Authority> authorities = new HashSet<>();
 
 }

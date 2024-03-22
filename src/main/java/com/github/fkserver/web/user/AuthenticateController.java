@@ -1,4 +1,4 @@
-package com.github.fkserver.web.auth;
+package com.github.fkserver.web.user;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;

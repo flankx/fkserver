@@ -1,6 +1,7 @@
 package com.github.fkserver.config;
 
 import com.github.fkserver.aop.LoggingAspect;
+import com.github.fkserver.aop.RequestLogAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -15,6 +16,12 @@ public class LoggingAspectConfiguration {
     @Profile("dev")
     public LoggingAspect loggingAspect(Environment env) {
         return new LoggingAspect(env);
+    }
+
+    @Bean
+    @Profile("prod")
+    public RequestLogAspect requestLogAspect(Environment env) {
+        return new RequestLogAspect(env);
     }
 
 }
