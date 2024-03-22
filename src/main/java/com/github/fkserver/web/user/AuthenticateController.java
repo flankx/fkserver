@@ -47,7 +47,6 @@ public class AuthenticateController {
     }
 
     @PostMapping("/authenticate")
-    @Operation(summary = "登录授权")
     public ResponseEntity<JwtTokenDTO> authorize(@Validated @RequestBody LoginDTO login) {
         UsernamePasswordAuthenticationToken authenticationToken =
             new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword());

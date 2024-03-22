@@ -27,7 +27,7 @@ public class RequestLogAspect {
         this.env = env;
     }
 
-    @Pointcut("execution(!static org.springframework.http.ResponseEntity *(..))")
+    @Pointcut("execution(!static com.github.fkserver.error.R *(..)) || execution(!static org.springframework.http.ResponseEntity *(..))")
     private void resultPointcut() {}
 
     @Pointcut("@within(org.springframework.stereotype.Controller) || @within(org.springframework.web.bind.annotation.RestController)")

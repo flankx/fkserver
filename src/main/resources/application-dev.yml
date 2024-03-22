@@ -49,12 +49,12 @@ springdoc:
   api-docs:
     path: /v3/api-docs
   group-configs:
-    - group: 'WS通信'
+    - group: '通用模块'
       paths-to-match: '/**'
       packages-to-scan: com.github.fkserver.web.websocket
-    - group: '登录授权'
+    - group: '用户模块'
       paths-to-match: '/**'
-      packages-to-scan: com.github.fkserver.web.auth
+      packages-to-scan: com.github.fkserver.web.user
 
 
 # knife4j的增强配置，不需要增强可以不配
