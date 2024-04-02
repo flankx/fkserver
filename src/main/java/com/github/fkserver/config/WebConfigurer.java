@@ -35,9 +35,9 @@ public class WebConfigurer implements ServletContextInitializer {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("http://localhost:8100,http://localhost:9000");
+        config.addAllowedOrigin("http://localhost:8080,https://localhost:8080");
         // Enable CORS when running in GitHub CodeSpaces
-        config.addAllowedOriginPattern("https://*.githubpreview.dev");
+        config.addAllowedOriginPattern("https://*.github.dev");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         config.addExposedHeader("Authorization,Link,X-Total-Count,X-FKS-alert,X-FKS-error,X-FKS-params");

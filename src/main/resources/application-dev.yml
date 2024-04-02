@@ -1,7 +1,16 @@
+logging:
+  level:
+    ROOT: INFO
+    org.hibernate.SQL: DEBUG
+    com.github.fkserver: DEBUG
+
 server:
   port: 8080
 
 spring:
+
+
+
 
   devtools:
     restart:
@@ -14,7 +23,7 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:mysql://localhost:3306/fkserver?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
     username: root
-    password: root
+    password: 
     hikari:
       pool-name: Hikari
       auto-commit: false
