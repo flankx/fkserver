@@ -1,7 +1,10 @@
 package com.github.fkserver.error;
 
+import java.io.Serial;
+
 public class BizException extends RuntimeException {
 
+    @Serial
     private static final long serialVersionUID = -4966587587799868847L;
 
     private final IErrorCode resultCode;

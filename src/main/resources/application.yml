@@ -89,12 +89,21 @@ spring:
       repositories:
         bootstrap-mode: deferred
 
+  flyway:
+    enabled: true
+    clean-disabled: true
+    baseline-on-migrate: true
+    validate-on-migrate: true
+    baseline-version: 0
+    locations: classpath:db/migration
+
+
   jpa:
     open-in-view: false
     properties:
-      hibernate.jdbc.time_zone: UTC
+      hibernate.jdbc.time_zone: Asia/Shanghai
       hibernate.timezone.default_storage: NORMALIZE
-      hibernate.type.preferred_instant_jdbc_type: TIMESTAMP
+      # hibernate.type.preferred_instant_jdbc_type: TIMESTAMP
       hibernate.id.new_generator_mappings: true
       hibernate.connection.provider_disables_autocommit: true
       hibernate.cache.use_second_level_cache: false
