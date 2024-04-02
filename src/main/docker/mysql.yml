@@ -2,7 +2,7 @@
 name: fkserver
 services:
   mysql:
-    image: mysql:8.2.0
+    image: mysql:8.0
     volumes:
       - ./config/mysql:/etc/mysql/conf.d
     #   - ~/volumes/jhipster/fkserver/mysql/:/var/lib/mysql/

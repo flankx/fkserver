@@ -9,9 +9,6 @@ server:
 
 spring:
 
-
-
-
   devtools:
     restart:
       enabled: true
@@ -34,19 +31,19 @@ spring:
         useServerPrepStmts: true
 
   # redis 配置
-  data:
-    redis:
-      host: localhost
-      port: 6379
-      database: 0
-      password:
-      timeout: 30000ms
-      lettuce:
-        pool:
-          max-active: 8
-          max-wait: -1ms
-          max-idle: 8
-          min-idle: 0
+  # data:
+  #   redis:
+  #     host: localhost
+  #     port: 6379
+  #     database: 0
+  #     password:
+  #     timeout: 30000ms
+  #     lettuce:
+  #       pool:
+  #         max-active: 8
+  #         max-wait: -1ms
+  #         max-idle: 8
+  #         min-idle: 0
 
 # springdoc-openapi项目配置
 springdoc:
