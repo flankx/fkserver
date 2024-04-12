@@ -136,6 +136,18 @@ spring:
   thymeleaf:
     mode: HTML
 
+  mail:
+    protocol: smtp
+    host: smtp-mail.outlook.com
+    port: 587
+    username: ${MAIL_USERNAME:bookman666@hotmail.com}
+    password: ${MAIL_PASSWORD:xxxxxx}
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+
 application:
   app-version: 1.0
   jwt:
