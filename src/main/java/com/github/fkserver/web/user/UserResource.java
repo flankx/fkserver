@@ -1,16 +1,21 @@
 package com.github.fkserver.web.user;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +27,10 @@ import com.github.fkserver.error.BizException;
 import com.github.fkserver.error.R;
 import com.github.fkserver.repository.UserRepository;
 import com.github.fkserver.security.AuthoritiesConstants;
+import com.github.fkserver.service.MailService;
 import com.github.fkserver.service.UserService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 
@@ -44,11 +51,12 @@ public class UserResource {
 
     private final UserRepository userRepository;
 
-    // private final MailService mailService;
+    private final MailService mailService;
 
-    public UserResource(UserService userService, UserRepository userRepository) {
+    public UserResource(UserService userService, UserRepository userRepository, MailService mailService) {
         this.userService = userService;
         this.userRepository = userRepository;
+        this.mailService = mailService;
     }
 
     /**
@@ -56,7 +64,7 @@ public class UserResource {
      */
     @PostMapping("/users")
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
-    public R<User> createUser(@Valid @RequestBody AdminUserDTO userDTO) throws URISyntaxException {
+    public ResponseEntity<User> createUser(@Valid @RequestBody AdminUserDTO userDTO) throws URISyntaxException {
         log.info("REST request to save User : {}", userDTO);
 
         if (userDTO.getId() != null) {
@@ -67,9 +75,23 @@ public class UserResource {
         } else if (userRepository.findOneByEmailIgnoreCase(userDTO.getEmail()).isPresent()) {
             throw new BizException("email already exists");
         } else {
-            // mailService.sendCreationEmail(newUser);
-            return R.data(userService.createUser(userDTO));
+            User newUser = userService.createUser(userDTO);
+            mailService.sendCreationEmail(newUser);
+            return ResponseEntity.created(new URI("/api/admin/users/" + newUser.getLogin()))
+                .headers(createAlert(applicationName, newUser.getLogin())).body(newUser);
         }
+    }
+
+    private HttpHeaders createAlert(String applicationName, String param) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-" + applicationName + "-alert", "userManagement.created");
+        try {
+            headers.add("X-" + applicationName + "-params",
+                URLEncoder.encode(param, StandardCharsets.UTF_8.toString()));
+        } catch (UnsupportedEncodingException e) {
+            // StandardCharsets are supported by every Java implementation so this exception will never happen
+        }
+        return headers;
     }
 
     /**

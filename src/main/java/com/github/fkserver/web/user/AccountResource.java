@@ -2,7 +2,6 @@ package com.github.fkserver.web.user;
 
 import java.util.Optional;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +17,10 @@ import com.github.fkserver.entity.User;
 import com.github.fkserver.error.BizException;
 import com.github.fkserver.repository.UserRepository;
 import com.github.fkserver.security.SecurityUtils;
+import com.github.fkserver.service.MailService;
 import com.github.fkserver.service.UserService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 /**
@@ -36,12 +37,12 @@ public class AccountResource {
 
     private final UserService userService;
 
-    // private final MailService mailService;
+    private final MailService mailService;
 
-    public AccountResource(UserRepository userRepository, UserService userService) {
+    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
         this.userRepository = userRepository;
         this.userService = userService;
-
+        this.mailService = mailService;
     }
 
     /**
@@ -55,7 +56,7 @@ public class AccountResource {
             throw new BizException("password length is invalid");
         }
         User user = userService.registerUser(managedUser, managedUser.getPassword());
-        // mailService.sendActivationEmail(user);
+        mailService.sendActivationEmail(user);
     }
 
     /**
@@ -116,7 +117,7 @@ public class AccountResource {
     public void requestPasswordReset(@RequestBody String mail) {
         Optional<User> user = userService.requestPasswordReset(mail);
         if (user.isPresent()) {
-            // mailService.sendPasswordResetMail(user.orElseThrow());
+            mailService.sendPasswordResetMail(user.orElseThrow());
         } else {
             // Pretend the request has been successful to prevent checking which emails really exist
             // but log that an invalid attempt has been made
